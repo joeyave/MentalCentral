@@ -22,6 +22,7 @@ export class PatientComponent implements OnInit, OnDestroy {
   page: number;
   predicate: string;
   ascending: boolean;
+  search: string;
 
   constructor(
     protected patientService: PatientService,
@@ -35,6 +36,7 @@ export class PatientComponent implements OnInit, OnDestroy {
     this.links = {
       last: 0,
     };
+    this.search = '';
     this.predicate = 'id';
     this.ascending = true;
   }

@@ -1,5 +1,20 @@
+<style>
+    span{height:40px; width:40px; display:block; position:relative;}
+
+    .lupa:before, .lupa:after{content:''; height:20px; display:block; position:absolute; top:0; left:0; }
+
+    .lupa:before{width:20px; border:3px #333 solid; border-radius:100%;-webkit-border-radius:100%;-moz-border-radius:100%;}
+
+    .lupa:after{width:7px; background:#333; transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);-ms-transform:rotate(-45deg); top:17px; left:24px;}
+</style>
+
 <div>
     <h2 id="page-heading">
+            <div class="md-form">
+                <input type="search" [(ngModel)]="search" placeholder="{{'mentalCentralApp.patient.search' | translate}}">
+            </div>
+            <p>{{search}}</p>
+        <span class="lupa"></span>
         <span jhiTranslate="mentalCentralApp.patient.home.title">Patients</span>
 
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-patient" [routerLink]="['/patient/new']">
@@ -14,7 +29,7 @@
 
     <jhi-alert></jhi-alert>
 
-    <div class="alert alert-warning" id="no-result" *ngIf="patients?.length === 0">
+    <div class="alert alert-warning" id="no-result" *ngIf="patients?.length === 0 || !( patients | filterPatient: search)">
         <span jhiTranslate="mentalCentralApp.patient.home.notFound">No patients found</span>
     </div>
 
@@ -22,7 +37,6 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="reset.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="fullname"><span jhiTranslate="mentalCentralApp.patient.fullname">Fullname</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="dateBirthday"><span jhiTranslate="mentalCentralApp.patient.dateBirthday">Date Birthday</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="address"><span jhiTranslate="mentalCentralApp.patient.address">Address</span> <fa-icon icon="sort"></fa-icon></th>
@@ -32,8 +46,7 @@
                 </tr>
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
-                <tr *ngFor="let patient of patients ;trackBy: trackId">
-                    <td><a [routerLink]="['/patient', patient.id, 'view']">{{ patient.id }}</a></td>
+                <tr *ngFor="let patient of patients | filterPatient: search ;trackBy: trackId">
                     <td>{{ patient.fullname }}</td>
                     <td>{{ patient.dateBirthday | date:'mediumDate' }}</td>
                     <td>{{ patient.address }}</td>
