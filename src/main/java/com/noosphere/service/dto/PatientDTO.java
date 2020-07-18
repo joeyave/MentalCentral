@@ -8,7 +8,7 @@ import java.io.Serializable;
  * A DTO for the {@link com.noosphere.domain.Patient} entity.
  */
 public class PatientDTO implements Serializable {
-    
+
     private Long id;
 
     @NotNull
@@ -21,12 +21,13 @@ public class PatientDTO implements Serializable {
     private String address;
 
     @NotNull
+    @Pattern(regexp = "+380[0-9]{9}")
     private String phone;
 
     @NotNull
     private Integer diagnosis;
 
-    
+
     public Long getId() {
         return id;
     }
