@@ -21,7 +21,6 @@ public class PatientDTO implements Serializable {
     private String address;
 
     @NotNull
-    @Pattern(regexp = "+380[0-9]{9}")
     private String phone;
 
     @NotNull

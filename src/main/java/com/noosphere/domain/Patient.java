@@ -39,7 +39,6 @@ public class Patient implements Serializable {
     private String address;
 
     @NotNull
-    @Pattern(regexp = "+380[0-9]{9}")
     @Column(name = "phone", nullable = false)
     private String phone;
 
