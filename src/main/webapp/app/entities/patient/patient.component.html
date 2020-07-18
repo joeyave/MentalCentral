@@ -1,20 +1,8 @@
-<style>
-    span{height:40px; width:40px; display:block; position:relative;}
-
-    .lupa:before, .lupa:after{content:''; height:20px; display:block; position:absolute; top:0; left:0; }
-
-    .lupa:before{width:20px; border:3px #333 solid; border-radius:100%;-webkit-border-radius:100%;-moz-border-radius:100%;}
-
-    .lupa:after{width:7px; background:#333; transform:rotate(-45deg);-webkit-transform:rotate(-45deg);-moz-transform:rotate(-45deg);-o-transform:rotate(-45deg);-ms-transform:rotate(-45deg); top:17px; left:24px;}
-</style>
-
 <div>
     <h2 id="page-heading">
             <div class="md-form">
                 <input type="search" [(ngModel)]="search" placeholder="{{'mentalCentralApp.patient.search' | translate}}">
             </div>
-            <p>{{search}}</p>
-        <span class="lupa"></span>
         <span jhiTranslate="mentalCentralApp.patient.home.title">Patients</span>
 
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-patient" [routerLink]="['/patient/new']">
