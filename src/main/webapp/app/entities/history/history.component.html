@@ -33,7 +33,7 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let history of histories ;trackBy: trackId">
                     <td><a [routerLink]="['/history', history.id, 'view']">{{ history.id }}</a></td>
-                    <td>{{ history.dateRecord | date:'mediumDate' }}</td>
+                    <td>{{ history.dateRecord | date:'dd-MM-yyy' }}</td>
                     <td>{{ history.type }}</td>
                     <td>{{ history.info }}</td>
                     <td>

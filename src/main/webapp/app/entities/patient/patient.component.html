@@ -36,7 +36,7 @@
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
                 <tr *ngFor="let patient of patients | filterPatient: search ;trackBy: trackId">
                     <td>{{ patient.fullname }}</td>
-                    <td>{{ patient.dateBirthday | date:'mediumDate' }}</td>
+                    <td>{{ patient.dateBirthday | date:'dd-MM-yyy' }}</td>
                     <td>{{ patient.address }}</td>
                     <td>{{ patient.phone }}</td>
                     <td>{{ patient.diagnosis }}</td>
