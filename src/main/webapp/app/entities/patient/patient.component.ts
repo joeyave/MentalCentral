@@ -10,6 +10,17 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { PatientService } from './patient.service';
 import { PatientDeleteDialogComponent } from './patient-delete-dialog.component';
 
+// TODO *jhiHasAnyAuthority="{authorities: '[Authority.USER]', enable:false}
+
+/*
+TODO
+                            <button type="submit"
+                                    [routerLink]="['/visit', patient.id]"
+                                    class="btn btn-dark btn-sm">
+                                <span class="d-none d-md-inline" jhiTranslate="mentalCentralApp.patient.visit">Visit</span>
+                            </button>
+ */
+
 @Component({
   selector: 'jhi-patient',
   templateUrl: './patient.component.html',
