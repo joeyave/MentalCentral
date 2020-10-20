@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { LANGUAGES } from 'app/core/language/language.constants';
 import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
+import { RegisterService } from '../../account/register/register.service';
+import { UserExtraService } from '../../entities/user-extra/user-extra.service';
 
 @Component({
   selector: 'jhi-user-mgmt-update',
@@ -15,6 +17,7 @@ export class UserManagementUpdateComponent implements OnInit {
   languages = LANGUAGES;
   authorities: string[] = [];
   isSaving = false;
+  doNotMatch = false;
 
   editForm = this.fb.group({
     id: [],
@@ -29,22 +32,41 @@ export class UserManagementUpdateComponent implements OnInit {
     ],
     firstName: ['', [Validators.maxLength(50)]],
     lastName: ['', [Validators.maxLength(50)]],
+    middleName: ['', [Validators.maxLength(50)]],
+    phoneNumber: ['', [Validators.pattern('[+]380[0-9]{9}')]],
+    degree: ['', [Validators.maxLength(50)]],
     email: ['', [Validators.minLength(5), Validators.maxLength(254), Validators.email]],
+    password: ['', [Validators.minLength(4), Validators.maxLength(50)]],
+    confirmPassword: ['', [Validators.minLength(4), Validators.maxLength(50)]],
     activated: [],
     langKey: [],
     authorities: [],
   });
 
-  constructor(private userService: UserService, private route: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    private userService: UserService,
+    private registerService: RegisterService,
+    private userExtraService: UserExtraService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.route.data.subscribe(({ user }) => {
       if (user) {
         this.user = user;
+
         if (this.user.id === undefined) {
           this.user.activated = true;
+        } else {
+          this.userExtraService.find(user.id).subscribe(userExtra => {
+            user.middleName = userExtra.body!.middleName;
+            user.phoneNumber = userExtra.body!.phoneNumber;
+            user.degree = userExtra.body!.degree;
+
+            this.updateForm(user);
+          });
         }
-        this.updateForm(user);
       }
     });
     this.userService.authorities().subscribe(authorities => {
@@ -58,17 +80,24 @@ export class UserManagementUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
+    this.doNotMatch = false;
+
     this.updateUser(this.user);
+
     if (this.user.id !== undefined) {
       this.userService.update(this.user).subscribe(
         () => this.onSaveSuccess(),
         () => this.onSaveError()
       );
     } else {
-      this.userService.create(this.user).subscribe(
-        () => this.onSaveSuccess(),
-        () => this.onSaveError()
-      );
+      if (this.user.password !== this.editForm.get(['confirmPassword'])!.value) {
+        this.doNotMatch = true;
+      } else {
+        this.registerService.save(this.user).subscribe(
+          () => this.onSaveSuccess(),
+          () => this.onSaveError()
+        );
+      }
     }
   }
 
@@ -78,7 +107,10 @@ export class UserManagementUpdateComponent implements OnInit {
       login: user.login,
       firstName: user.firstName,
       lastName: user.lastName,
+      middleName: user.middleName,
       email: user.email,
+      phoneNumber: user.phoneNumber,
+      degree: user.degree,
       activated: user.activated,
       langKey: user.langKey,
       authorities: user.authorities,
@@ -89,7 +121,11 @@ export class UserManagementUpdateComponent implements OnInit {
     user.login = this.editForm.get(['login'])!.value;
     user.firstName = this.editForm.get(['firstName'])!.value;
     user.lastName = this.editForm.get(['lastName'])!.value;
+    user.middleName = this.editForm.get(['middleName'])!.value;
     user.email = this.editForm.get(['email'])!.value;
+    user.degree = this.editForm.get(['degree'])!.value;
+    user.phoneNumber = this.editForm.get(['phoneNumber'])!.value;
+    user.password = this.editForm.get(['password'])!.value;
     user.activated = this.editForm.get(['activated'])!.value;
     user.langKey = this.editForm.get(['langKey'])!.value;
     user.authorities = this.editForm.get(['authorities'])!.value;

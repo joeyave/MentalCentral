@@ -7,10 +7,9 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Сущности",
-        "patient": "Patient",
-        "doctor": "Doctor",
-        "history": "History",
-        "visit": "Visit",
+        "patient": "Пациенты",
+        "visit": "Визиты",
+        "userExtra": "User Extra",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -54,7 +53,7 @@
         "authenticated": {
           "prefix": "Если вы хотите ",
           "link": "авторизироваться",
-          "suffix": ", вы можете попробовать аккаунты по умолчанию:<br/>- Администратор (логин=\"admin\" и пароль=\"admin\") <br/>- Пользователь (логин=\"user\" и пароль=\"user\")."
+          "suffix": ", вы можете попробовать аккаунты по умолчанию:<br/>- Администратор (логин=\"admin\" и пароль=\"admin\") <br/>- Ресепшн (логин=\"reception\" и пароль=\"reception\") <br/>- Доктор (логин=\"doctor\" и пароль=\"doctor\")."
         },
         "register": {
           "noaccount": "У вас нет аккаунта?",

@@ -7,10 +7,9 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Сутності",
-        "patient": "Patient",
-        "doctor": "Doctor",
-        "history": "History",
-        "visit": "Visit",
+        "patient": "Пацієнти",
+        "visit": "Візити",
+        "userExtra": "User Extra",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -40,6 +39,8 @@
     "form": {
       "username.label": "Логін",
       "username.placeholder": "Ваш логін",
+      "currentpassword.label": "Старий пароль",
+      "currentpassword.placeholder": "Старий пароль",
       "newpassword.label": "Новий пароль",
       "newpassword.placeholder": "Новий пароль",
       "confirmpassword.label": "Підтвердження нового пароля",
@@ -52,7 +53,7 @@
         "authenticated": {
           "prefix": "Якщо ви хочете",
           "link": "авторизуватися",
-          "suffix": ", ви можете спробувати облікові записи за замовчуванням:<br/>- Адмiністратор (логін=\"admin\" і пароль=\"admin\") <br/>- Користувач (логін=\"user\" і пароль=\"user\")."
+          "suffix": ", ви можете спробувати облікові записи за замовчуванням:<br/>- Адмiністратор (логін=\"admin\" і пароль=\"admin\") <br/>- Ресепшн (логін=\"reception\" і пароль=\"reception\") <br/>- Доктор (логін=\"doctor\" і пароль=\"doctor\")."
         },
         "register": {
           "noaccount": "У вас немає облікового запису?",
@@ -60,7 +61,8 @@
         }
       },
       "error": {
-        "dontmatch": "Пароль і його підтвердження не збігаються!"
+        "dontmatch": "Пароль і його підтвердження не збігаються!",
+        "notoldenough": "Пацієнту має бути хоча б один рік!"
       },
       "validate": {
         "newpassword": {

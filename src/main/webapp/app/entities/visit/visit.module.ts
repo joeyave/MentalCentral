@@ -7,10 +7,21 @@ import { VisitDetailComponent } from './visit-detail.component';
 import { VisitUpdateComponent } from './visit-update.component';
 import { VisitDeleteDialogComponent } from './visit-delete-dialog.component';
 import { visitRoute } from './visit.route';
+import { FilterVisitsByPatientIdPipe } from '../visit/filter-visits-by-patient-id.pipe';
+
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { FilterVisitsByDatePipe } from './filter-visits-by-date.pipe';
 
 @NgModule({
-  imports: [MentalCentralSharedModule, RouterModule.forChild(visitRoute)],
-  declarations: [VisitComponent, VisitDetailComponent, VisitUpdateComponent, VisitDeleteDialogComponent],
+  imports: [MentalCentralSharedModule, RouterModule.forChild(visitRoute), ScrollingModule],
+  declarations: [
+    VisitComponent,
+    VisitDetailComponent,
+    VisitUpdateComponent,
+    VisitDeleteDialogComponent,
+    FilterVisitsByPatientIdPipe,
+    FilterVisitsByDatePipe,
+  ],
   entryComponents: [VisitDeleteDialogComponent],
 })
 export class MentalCentralVisitModule {}

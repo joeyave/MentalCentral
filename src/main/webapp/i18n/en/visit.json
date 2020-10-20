@@ -3,8 +3,9 @@
     "visit": {
       "home": {
         "title": "Visits",
-        "createLabel": "Create a new Visit",
+        "createLabel": "Create a visit",
         "createOrEditLabel": "Create or edit a Visit",
+        "search": "Search for Visit",
         "notFound": "No Visits found"
       },
       "created": "A new Visit is created with identifier {{ param }}",
@@ -16,11 +17,18 @@
       "detail": {
         "title": "Visit"
       },
+      "history": "History of visits",
       "type": "Type",
       "time": "Time",
-      "teraphy": "Teraphy",
+      "therapy": "Therapy",
       "doctor": "Doctor",
-      "patient": "Patient"
+      "patient": "Patient",
+      "createVisit": "Create a visit for {{ fullName }}",
+      "appoint": "Appoint therapy",
+      "stationary": "Stationary",
+      "ambulatory": "Ambulatory",
+      "docx": "Download docx",
+      "note": "Note"
     }
   }
 }

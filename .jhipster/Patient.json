@@ -2,29 +2,28 @@
   "name": "Patient",
   "fields": [
     {
-      "fieldName": "fullname",
+      "fieldName": "fullName",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "dateBirthday",
+      "fieldName": "birthDate",
       "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "address",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String"
     },
     {
-      "fieldName": "phone",
+      "fieldName": "phoneNumber",
       "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["pattern"],
+      "fieldValidateRulesPattern": "[+]380[0-9]{9}"
     },
     {
       "fieldName": "diagnosis",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String"
     }
   ],
   "relationships": [
@@ -33,23 +32,19 @@
       "otherEntityName": "visit",
       "otherEntityRelationshipName": "patient",
       "relationshipName": "visit"
-    },
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "history",
-      "otherEntityRelationshipName": "patient",
-      "relationshipName": "history"
     }
   ],
-  "changelogDate": "20200714125620",
+  "changelogDate": "20200721212932",
   "entityTableName": "patient",
-  "dto": "mapstruct",
+  "dto": "no",
   "pagination": "infinite-scroll",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,
   "clientRootFolder": "",
-  "applications": "*"
+  "applications": ["MentalCentral"],
+  "searchEngine": "elasticsearch",
+  "elasticsearch": "elasticsearch"
 }

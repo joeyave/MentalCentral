@@ -9,12 +9,11 @@ import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 import { IVisit, Visit } from 'app/shared/model/visit.model';
 import { VisitService } from './visit.service';
-import { IDoctor } from 'app/shared/model/doctor.model';
-import { DoctorService } from 'app/entities/doctor/doctor.service';
+import { IUser } from 'app/core/user/user.model';
+import { UserService } from 'app/core/user/user.service';
 import { IPatient } from 'app/shared/model/patient.model';
 import { PatientService } from 'app/entities/patient/patient.service';
-
-type SelectableEntity = IDoctor | IPatient;
+type SelectableEntity = IUser | IPatient;
 
 @Component({
   selector: 'jhi-visit-update',
@@ -22,21 +21,23 @@ type SelectableEntity = IDoctor | IPatient;
 })
 export class VisitUpdateComponent implements OnInit {
   isSaving = false;
-  doctors: IDoctor[] = [];
+  users: IUser[] = [];
   patients: IPatient[] = [];
+  visits!: IVisit[];
 
   editForm = this.fb.group({
     id: [],
     type: [null, [Validators.required]],
     time: [null, [Validators.required]],
-    teraphy: [null, [Validators.required]],
-    doctorId: [null, Validators.required],
-    patientId: [null, Validators.required],
+    therapy: [],
+    user: [null, Validators.required],
+    patient: [null, Validators.required],
+    note: [],
   });
 
   constructor(
     protected visitService: VisitService,
-    protected doctorService: DoctorService,
+    protected userService: UserService,
     protected patientService: PatientService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder
@@ -51,9 +52,11 @@ export class VisitUpdateComponent implements OnInit {
 
       this.updateForm(visit);
 
-      this.doctorService.query().subscribe((res: HttpResponse<IDoctor[]>) => (this.doctors = res.body || []));
+      this.userService.findAllDoctors().subscribe((res: HttpResponse<IUser[]>) => (this.users = res.body || []));
 
-      this.patientService.query().subscribe((res: HttpResponse<IPatient[]>) => (this.patients = res.body || []));
+      this.visitService.query().subscribe((res: HttpResponse<IVisit[]>) => (this.visits = res.body || []));
+
+      this.patientService.queryWithoutPagination().subscribe((res: HttpResponse<IPatient[]>) => (this.patients = res.body || []));
     });
   }
 
@@ -62,9 +65,10 @@ export class VisitUpdateComponent implements OnInit {
       id: visit.id,
       type: visit.type,
       time: visit.time ? visit.time.format(DATE_TIME_FORMAT) : null,
-      teraphy: visit.teraphy,
-      doctorId: visit.doctorId,
-      patientId: visit.patientId,
+      therapy: visit.therapy,
+      user: visit.user,
+      patient: visit.patient,
+      note: visit.note,
     });
   }
 
@@ -88,9 +92,10 @@ export class VisitUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       type: this.editForm.get(['type'])!.value,
       time: this.editForm.get(['time'])!.value ? moment(this.editForm.get(['time'])!.value, DATE_TIME_FORMAT) : undefined,
-      teraphy: this.editForm.get(['teraphy'])!.value,
-      doctorId: this.editForm.get(['doctorId'])!.value,
-      patientId: this.editForm.get(['patientId'])!.value,
+      therapy: this.editForm.get(['therapy'])!.value,
+      user: this.editForm.get(['user'])!.value,
+      patient: this.editForm.get(['patient'])!.value,
+      note: this.editForm.get(['note'])!.value,
     };
   }
 

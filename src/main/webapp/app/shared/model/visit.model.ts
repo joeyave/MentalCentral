@@ -1,14 +1,15 @@
 import { Moment } from 'moment';
+import { IUser } from 'app/core/user/user.model';
+import { IPatient } from 'app/shared/model/patient.model';
 
 export interface IVisit {
   id?: number;
   type?: string;
   time?: Moment;
-  teraphy?: string;
-  doctorFullname?: string;
-  doctorId?: number;
-  patientFullname?: string;
-  patientId?: number;
+  therapy?: string;
+  user?: IUser;
+  patient?: IPatient;
+  note?: string;
 }
 
 export class Visit implements IVisit {
@@ -16,10 +17,9 @@ export class Visit implements IVisit {
     public id?: number,
     public type?: string,
     public time?: Moment,
-    public teraphy?: string,
-    public doctorFullname?: string,
-    public doctorId?: number,
-    public patientFullname?: string,
-    public patientId?: number
+    public therapy?: string,
+    public user?: IUser,
+    public patient?: IPatient,
+    public note?: string
   ) {}
 }

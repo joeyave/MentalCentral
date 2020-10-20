@@ -5,7 +5,9 @@
         "title": "Patients",
         "createLabel": "Create a new Patient",
         "createOrEditLabel": "Create or edit a Patient",
-        "notFound": "No Patients found"
+        "search": "Search for Patient",
+        "notFound": "No Patients found",
+        "assignDiagnose": "Assign diagnose"
       },
       "created": "A new Patient is created with identifier {{ param }}",
       "updated": "A Patient is updated with identifier {{ param }}",
@@ -16,13 +18,12 @@
       "detail": {
         "title": "Patient"
       },
-      "fullname": "Fullname",
-      "dateBirthday": "Date Birthday",
+      "fullName": "Full Name",
+      "birthDate": "Birth Date",
       "address": "Address",
-      "phone": "Phone",
+      "phoneNumber": "Phone Number",
       "diagnosis": "Diagnosis",
-      "visit": "Visit",
-      "history": "History"
+      "visit": "Visit"
     }
   }
 }

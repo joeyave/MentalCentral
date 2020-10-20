@@ -12,19 +12,22 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "teraphy",
-      "fieldType": "String",
-      "fieldValidateRules": ["required"]
+      "fieldName": "therapy",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "note",
+      "fieldType": "String"
     }
   ],
   "relationships": [
     {
       "relationshipType": "many-to-one",
-      "otherEntityName": "doctor",
+      "otherEntityName": "user",
       "otherEntityRelationshipName": "visit",
       "relationshipValidateRules": "required",
-      "relationshipName": "doctor",
-      "otherEntityField": "fullname"
+      "relationshipName": "user",
+      "otherEntityField": "lastName"
     },
     {
       "relationshipType": "many-to-one",
@@ -32,18 +35,20 @@
       "otherEntityRelationshipName": "visit",
       "relationshipValidateRules": "required",
       "relationshipName": "patient",
-      "otherEntityField": "fullname"
+      "otherEntityField": "fullName"
     }
   ],
-  "changelogDate": "20200714125920",
+  "changelogDate": "20200721213032",
   "entityTableName": "visit",
-  "dto": "mapstruct",
+  "dto": "no",
   "pagination": "infinite-scroll",
-  "service": "serviceImpl",
-  "jpaMetamodelFiltering": false,
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": true,
   "fluentMethods": true,
   "readOnly": false,
   "embedded": false,
   "clientRootFolder": "",
-  "applications": "*"
+  "applications": ["MentalCentral"],
+  "searchEngine": "elasticsearch",
+  "elasticsearch": "elasticsearch"
 }

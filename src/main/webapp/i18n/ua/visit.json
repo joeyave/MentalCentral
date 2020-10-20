@@ -2,25 +2,33 @@
   "mentalCentralApp": {
     "visit": {
       "home": {
-        "title": "Visits",
-        "createLabel": "Створити новий Visit",
-        "createOrEditLabel": "Створити чи редагувати Visit",
-        "notFound": "No Visits found"
+        "title": "Візити",
+        "createLabel": "Створити візит",
+        "createOrEditLabel": "Створити чи редагувати Візит",
+        "search": "Пошук візитів",
+        "notFound": "Візити не знайдені"
       },
-      "created": "Новий Visit створений з ідентифікатором {{ param }}",
-      "updated": "Visit оновлений з ідентифікатором {{ param }}",
-      "deleted": "Visit видалений з ідентифікатором {{ param }}",
+      "created": "Новий Візит створений з ідентифікатором {{ param }}",
+      "updated": "Візит оновлений з ідентифікатором {{ param }}",
+      "deleted": "Візит видалений з ідентифікатором {{ param }}",
       "delete": {
-        "question": "Ви впевнені, що хочете видалити Visit {{ id }}?"
+        "question": "Ви впевнені, що хочете видалити Візит {{ id }}?"
       },
       "detail": {
-        "title": "Visit"
+        "title": "Візит"
       },
-      "type": "Type",
-      "time": "Time",
-      "teraphy": "Teraphy",
-      "doctor": "Doctor",
-      "patient": "Patient"
+      "history": "Історія візитів",
+      "type": "Тип",
+      "time": "Час",
+      "therapy": "Терапія",
+      "doctor": "Лікар",
+      "patient": "Пацієнт",
+      "createVisit": "Створити візит для {{ fullName }}",
+      "appoint": "Назначити терапію",
+      "stationary": "Стаціонарний",
+      "ambulatory": "Амбулаторний",
+      "docx": "Скачати docx",
+      "note": "Примітка"
     }
   }
 }

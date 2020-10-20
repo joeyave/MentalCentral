@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 import { IPatient, Patient } from 'app/shared/model/patient.model';
 import { PatientService } from './patient.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-patient-update',
@@ -14,15 +15,15 @@ import { PatientService } from './patient.service';
 })
 export class PatientUpdateComponent implements OnInit {
   isSaving = false;
-  dateBirthdayDp: any;
+  birthDateDp: any;
 
   editForm = this.fb.group({
     id: [],
-    fullname: [null, [Validators.required]],
-    dateBirthday: [null, [Validators.required]],
-    address: [null, [Validators.required]],
-    phone: [null, [Validators.required]],
-    diagnosis: [null, [Validators.required]],
+    fullName: [null, [Validators.required]],
+    birthDate: [null, [Validators.required]],
+    address: [],
+    phoneNumber: [null, [Validators.pattern('[+]380[0-9]{9}')]],
+    diagnosis: [null],
   });
 
   constructor(protected patientService: PatientService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
@@ -36,10 +37,10 @@ export class PatientUpdateComponent implements OnInit {
   updateForm(patient: IPatient): void {
     this.editForm.patchValue({
       id: patient.id,
-      fullname: patient.fullname,
-      dateBirthday: patient.dateBirthday,
+      fullName: patient.fullName,
+      birthDate: patient.birthDate,
       address: patient.address,
-      phone: patient.phone,
+      phoneNumber: patient.phoneNumber,
       diagnosis: patient.diagnosis,
     });
   }
@@ -50,6 +51,7 @@ export class PatientUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
+
     const patient = this.createFromForm();
     if (patient.id !== undefined) {
       this.subscribeToSaveResponse(this.patientService.update(patient));
@@ -62,12 +64,25 @@ export class PatientUpdateComponent implements OnInit {
     return {
       ...new Patient(),
       id: this.editForm.get(['id'])!.value,
-      fullname: this.editForm.get(['fullname'])!.value,
-      dateBirthday: this.editForm.get(['dateBirthday'])!.value,
+      fullName: this.editForm.get(['fullName'])!.value,
+      birthDate: this.editForm.get(['birthDate'])!.value,
       address: this.editForm.get(['address'])!.value,
-      phone: this.editForm.get(['phone'])!.value,
+      phoneNumber: this.editForm.get(['phoneNumber'])!.value,
       diagnosis: this.editForm.get(['diagnosis'])!.value,
     };
+  }
+
+  public checkIfOldEnough(): boolean {
+    const birthDate: Date = this.editForm.get(['birthDate'])!.value;
+    const age = moment().diff(birthDate, 'years');
+
+    if (age < 1) {
+      this.editForm.get(['birthDate'])!.setErrors({ notOldEnough: 'Patient has to be at least one year old.\n' });
+      return false;
+    } else {
+      this.editForm.get(['birthDate'])!.setErrors(null);
+      return true;
+    }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IPatient>>): void {

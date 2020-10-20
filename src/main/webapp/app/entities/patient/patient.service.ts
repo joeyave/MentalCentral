@@ -6,7 +6,7 @@ import * as moment from 'moment';
 
 import { DATE_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
-import { createRequestOption } from 'app/shared/util/request-util';
+import { createRequestOption, SearchWithPagination } from 'app/shared/util/request-util';
 import { IPatient } from 'app/shared/model/patient.model';
 
 type EntityResponseType = HttpResponse<IPatient>;
@@ -15,6 +15,7 @@ type EntityArrayResponseType = HttpResponse<IPatient[]>;
 @Injectable({ providedIn: 'root' })
 export class PatientService {
   public resourceUrl = SERVER_API_URL + 'api/patients';
+  public resourceSearchUrl = SERVER_API_URL + 'api/_search/patients';
 
   constructor(protected http: HttpClient) {}
 
@@ -45,20 +46,34 @@ export class PatientService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
+  queryWithoutPagination(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IPatient[]>(this.resourceUrl + '/no-pagination', { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  search(req: SearchWithPagination): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http
+      .get<IPatient[]>(this.resourceSearchUrl, { params: options, observe: 'response' })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   protected convertDateFromClient(patient: IPatient): IPatient {
     const copy: IPatient = Object.assign({}, patient, {
-      dateBirthday: patient.dateBirthday && patient.dateBirthday.isValid() ? patient.dateBirthday.format(DATE_FORMAT) : undefined,
+      birthDate: patient.birthDate && patient.birthDate.isValid() ? patient.birthDate.format(DATE_FORMAT) : undefined,
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.dateBirthday = res.body.dateBirthday ? moment(res.body.dateBirthday) : undefined;
+      res.body.birthDate = res.body.birthDate ? moment(res.body.birthDate) : undefined;
     }
     return res;
   }
@@ -66,7 +81,7 @@ export class PatientService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((patient: IPatient) => {
-        patient.dateBirthday = patient.dateBirthday ? moment(patient.dateBirthday) : undefined;
+        patient.birthDate = patient.birthDate ? moment(patient.birthDate) : undefined;
       });
     }
     return res;
